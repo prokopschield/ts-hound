@@ -1,0 +1,36 @@
+{
+	"name": "ts-hound",
+	"description": "Cross platform directory tree watcher, focussed on reliability, speed, and simplicity.",
+	"version": "1.0.5",
+	"main": "lib/index",
+	"author": "Michael Alexander <mail@michaelalexander.com.au> (http://michaelalexander.com.au)",
+	"contributors": [
+		"Prokop Schield <prokop.schield@protonmail.com> (https://prokop.schield.eu)"
+	],
+	"license": "SEE LICENSE IN LICENSE.md",
+	"keywords": [
+		"directory",
+		"tree",
+		"watch",
+		"windows",
+		"cross",
+		"platform",
+		"reliable",
+		"simple",
+		"fast"
+	],
+	"homepage": "https://github.com/prokopschield/ts-hound",
+	"bugs": {
+		"url": "https://github.com/prokopschield/ts-hound/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/prokopschield/ts-hound.git"
+	},
+	"devDependencies": {
+		"@types/node": ">=14"
+	},
+	"engines": {
+		"node": ">=0.7.1"
+	}
+}
