@@ -28,6 +28,14 @@ export function watch(src: string | string[], options ? : WatchOptions): Hound {
 	return watcher
 }
 
+export declare interface Hound extends EventEmitter {
+	on (event: 'watch', cb: (file: string) => void): this;
+	on (event: 'unwatch', cb: (file: string) => void): this;
+	on (event: 'create', cb: (file: string) => void): this;
+	on (event: 'change', cb: (file: string) => void): this;
+	on (event: 'delete', cb: (file: string) => void): this;
+}
+
 /**
  * The Hound class tracks watchers and changes and emits events.
  */

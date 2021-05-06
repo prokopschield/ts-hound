@@ -5,6 +5,13 @@ export interface WatchOptions {
     watchFn?: Function;
 }
 export declare function watch(src: string | string[], options?: WatchOptions): Hound;
+export declare interface Hound extends EventEmitter {
+    on(event: 'watch', cb: (file: string) => void): this;
+    on(event: 'unwatch', cb: (file: string) => void): this;
+    on(event: 'create', cb: (file: string) => void): this;
+    on(event: 'change', cb: (file: string) => void): this;
+    on(event: 'delete', cb: (file: string) => void): this;
+}
 export declare class Hound extends EventEmitter {
     constructor(options?: WatchOptions);
     options: WatchOptions;
