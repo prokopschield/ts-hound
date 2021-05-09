@@ -11,6 +11,7 @@ export declare interface Hound extends EventEmitter {
     on(event: 'create', cb: (file: string) => void): this;
     on(event: 'change', cb: (file: string) => void): this;
     on(event: 'delete', cb: (file: string) => void): this;
+    on(event: 'error', cb: (file: string, error: Error) => void): this;
 }
 export declare class Hound extends EventEmitter {
     constructor(options?: WatchOptions);
