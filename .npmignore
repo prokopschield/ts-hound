@@ -2,7 +2,6 @@
 *.dat
 *.gz
 lib-cov
-lib/
 *.log
 logs
 node_modules/
@@ -12,4 +11,6 @@ npm-debug.log
 pids
 results
 *.seed
+src/
 tmp
+tsconfig.json

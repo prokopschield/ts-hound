@@ -1,11 +1,9 @@
 import EventEmitter from 'events';
-import fs, {
-	FSWatcher,
-} from 'fs';
+import fs, { FSWatcher } from 'fs';
 import path from 'path';
 
 export interface WatchOptions {
-	watchFn ? : Function;
+	watchFn?: Function;
 }
 
 /**
@@ -18,23 +16,23 @@ export interface WatchOptions {
  * @param {WatchOptions} options
  * @return {Hound}
  */
-export function watch(src: string | string[], options ? : WatchOptions): Hound {
-	var watcher = new Hound(options)
+export function watch(src: string | string[], options?: WatchOptions): Hound {
+	var watcher = new Hound(options);
 	if (src instanceof Array) {
 		for (const dir of src) {
 			watcher.watch(dir);
 		}
 	} else watcher.watch(src);
-	return watcher
+	return watcher;
 }
 
 export declare interface Hound extends EventEmitter {
-	on (event: 'watch', cb: (file: string) => void): this;
-	on (event: 'unwatch', cb: (file: string) => void): this;
-	on (event: 'create', cb: (file: string) => void): this;
-	on (event: 'change', cb: (file: string) => void): this;
-	on (event: 'delete', cb: (file: string) => void): this;
-	on (event: 'error', cb: (file: string, error: Error) => void): this;
+	on(event: 'watch', cb: (file: string) => void): this;
+	on(event: 'unwatch', cb: (file: string) => void): this;
+	on(event: 'create', cb: (file: string) => void): this;
+	on(event: 'change', cb: (file: string) => void): this;
+	on(event: 'delete', cb: (file: string) => void): this;
+	on(event: 'error', cb: (file: string, error: Error) => void): this;
 }
 
 /**
@@ -43,7 +41,7 @@ export declare interface Hound extends EventEmitter {
 export class Hound extends EventEmitter {
 	constructor(options?: WatchOptions) {
 		super();
-		this.options = options || {}
+		this.options = options || {};
 	}
 	options: WatchOptions;
 	watchers: {
@@ -63,40 +61,40 @@ export class Hound extends EventEmitter {
 		try {
 			const self: Hound = this;
 			let stats = fs.statSync(src);
-			let lastChange: number|null = null;
+			let lastChange: number | null = null;
 			const watchFn: Function = self.options.watchFn || fs.watch;
 			if (stats.isDirectory()) {
-				var files = fs.readdirSync(src)
+				var files = fs.readdirSync(src);
 				for (var i = 0, len = files.length; i < len; i++) {
-					self.watch(src + path.sep + files[i])
+					self.watch(src + path.sep + files[i]);
 				}
 			}
 			self.watchers[src] = watchFn(src, () => {
 				try {
 					if (fs.existsSync(src)) {
-						stats = fs.statSync(src)
+						stats = fs.statSync(src);
 						if (stats.isFile()) {
 							if (lastChange === null || stats.mtime.getTime() > lastChange)
-								self.emit('change', src, stats)
-							lastChange = stats.mtime.getTime()
+								self.emit('change', src, stats);
+							lastChange = stats.mtime.getTime();
 						} else if (stats.isDirectory()) {
 							// Check if the dir is new
 							if (self.watchers[src] === undefined) {
-								self.emit('create', src, stats)
+								self.emit('create', src, stats);
 							}
 							// Check files to see if there are any new files
-							var dirFiles = fs.readdirSync(src)
+							var dirFiles = fs.readdirSync(src);
 							for (var i = 0, len = dirFiles.length; i < len; i++) {
-								var file = src + path.sep + dirFiles[i]
+								var file = src + path.sep + dirFiles[i];
 								if (self.watchers[file] === undefined) {
-									self.watch(file)
-									self.emit('create', file, fs.statSync(file))
+									self.watch(file);
+									self.emit('create', file, fs.statSync(file));
 								}
 							}
 						}
 					} else {
-						self.unwatch(src)
-						self.emit('delete', src)
+						self.unwatch(src);
+						self.emit('delete', src);
 					}
 				} catch (error) {
 					this.emit('error', src, error);
@@ -114,21 +112,21 @@ export class Hound extends EventEmitter {
 	 * @param {string} src
 	 */
 	unwatch(src: string) {
-		var self = this
+		var self = this;
 		if (self.watchers[src] !== undefined) {
-			self.watchers[src].close()
-			delete self.watchers[src]
+			self.watchers[src].close();
+			delete self.watchers[src];
 		}
-		self.emit('unwatch', src)
+		self.emit('unwatch', src);
 	}
 
 	/**
 	 * Unwatch all currently watched files and directories in this watcher.
 	 */
 	clear() {
-		var self = this
+		var self = this;
 		for (var file in this.watchers) {
-			self.unwatch(file)
+			self.unwatch(file);
 		}
 	}
 }

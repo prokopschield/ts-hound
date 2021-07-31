@@ -1,15 +1,9 @@
-import {
-	Hound,
-	watch,
-} from './hound';
+import { Hound, watch } from './hound';
 
 export default Hound;
 module.exports = Hound;
 
-export {
-	Hound,
-	watch,
-}
+export { Hound, watch };
 
 Object.assign(Hound, {
 	default: Hound,
